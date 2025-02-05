@@ -1,0 +1,2 @@
+INSERT INTO Role (nom) VALUES ('Admin');
+INSERT INTO Utilisateurs (nom, prenom, email, mot_de_passe, role_id) VALUES ('Rainteau', 'Tom', 't.p.rainteau@gmail.com', '$2y$10$WNyYoUexMoRJRp2JokUmjO8Le0vb/KWatiH9D61iskrV8VkPR8Kxa', '1')
