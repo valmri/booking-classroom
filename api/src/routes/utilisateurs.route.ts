@@ -8,5 +8,9 @@ export const UtilisateursRoute = (controller: UtilisateursController) => {
     controller.getAllUtilisateurs(req, res);
   });
 
+  router.get("/:id",(req,res) => {
+    controller.getOneUtilisateur(req,res);
+  })
+
   return router;
 };
