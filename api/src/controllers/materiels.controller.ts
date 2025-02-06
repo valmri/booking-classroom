@@ -31,10 +31,6 @@ export class MaterielsController {
     if (!response.success) {
       return res.status(500).json(response);
     }
-    console.log(
-      "debugCreate",
-      response.data.insertId && typeof response.data.insertId === "bigint"
-    );
     if (response.data.insertId && typeof response.data.insertId === "bigint") {
       response.data.insertId = Number(response.data.insertId);
     }

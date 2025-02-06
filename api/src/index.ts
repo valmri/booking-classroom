@@ -25,8 +25,9 @@ app.use(
 app.use(express.json());
 
 const database = new DataBase();
-const utilisateursModel = new UtilisateursModel(database);
-const utilisateursController = new UtilisateursController(utilisateursModel);
+const utilisateursModel: UtilisateursModel = new UtilisateursModel(database);
+const utilisateursController: UtilisateursController =
+  new UtilisateursController(utilisateursModel);
 app.use("/utilisateurs", UtilisateursRoute(utilisateursController));
 
 const materielsModel = new MaterielsModel(database);
