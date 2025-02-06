@@ -9,7 +9,7 @@ export class UtilisateursController {
   }
 
   async getAllUtilisateurs(req: Request, res: Response) {
-    let response = await this.model.getAll();
+    const response = await this.model.getAll();
     if (!response.success) {
       return res.status(500).json(response);
     }
@@ -18,7 +18,7 @@ export class UtilisateursController {
 
   async getOneUtilisateur(req: Request, res: Response) {
     const id:number = parseInt(req.params.id);
-    let response = await this.model.getOne(id);
+    const response = await this.model.getOne(id);
     if (!response.success) {
       return res.status(500).json(response);
     }
@@ -26,13 +26,12 @@ export class UtilisateursController {
   }
 
   async createUtilisateur(req: Request, res:Response) {
-    console.log(req.body);
     const nom: string = req.body.nom;
     const prenom : string = req.body.prenom;
     const email : string = req.body.email;
     const mot_de_passe : string = req.body.mot_de_passe;
     const role_id : number = req.body.role_id;
-    let response = await this.model.create(nom,prenom,email,mot_de_passe,role_id);
+    const response = await this.model.create(nom,prenom,email,mot_de_passe,role_id);
     if (!response.success) {
       return res.status(500).json(response);
     }
@@ -42,7 +41,28 @@ export class UtilisateursController {
     return res.status(201).json(response);
   }
 
-  async updateUtilisateur(req: Request, res:Response) {
+  async deleteUtilisateur(req: Request, res:Response) {
+    const id: number = parseInt(req.params.id);
+    const response = await this.model.delete(id);
+    if (!response.success) {
+      return res.status(500).json(response);
+    }
+    delete response.data.insertId;
+    return res.status(204).json(response);
+  }
 
+  async updateUtilisateur(req: Request, res: Response){
+    const id:number = parseInt(req.params.id);
+    const nom: string = req.body.nom;
+    const prenom : string = req.body.prenom;
+    const email : string = req.body.email;
+    const mot_de_passe : string = req.body.mot_de_passe;
+    const role_id : number = req.body.role_id;
+    const response = await this.model.update(id,nom,prenom,email,mot_de_passe,role_id);
+    if (!response.success) {
+      return res.status(500).json(response);
+    }
+    delete response.data.insertId;
+    return res.status(201).json(response);
   }
 }

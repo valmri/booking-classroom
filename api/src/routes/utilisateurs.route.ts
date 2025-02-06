@@ -16,5 +16,13 @@ export const UtilisateursRoute = (controller: UtilisateursController) => {
     controller.createUtilisateur(req,res);
   })
 
+  router.delete("/:id",(req,res) => {
+    controller.deleteUtilisateur(req,res);
+  })
+
+  router.put("/:id",(req,res) => {
+    controller.updateUtilisateur(req,res);
+  })
+
   return router;
 };
