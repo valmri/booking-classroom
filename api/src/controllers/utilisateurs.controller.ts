@@ -48,7 +48,7 @@ export class UtilisateursController {
       return res.status(500).json(response);
     }
     delete response.data.insertId;
-    return res.status(204).json(response);
+    return res.status(200).json(response);
   }
 
   async updateUtilisateur(req: Request, res: Response){
@@ -63,6 +63,6 @@ export class UtilisateursController {
       return res.status(500).json(response);
     }
     delete response.data.insertId;
-    return res.status(201).json(response);
+    return res.status(200).json(response);
   }
 }
