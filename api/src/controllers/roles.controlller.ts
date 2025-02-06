@@ -1,14 +1,14 @@
-import { MaterielsModel } from "../models/materiels.model";
+import { RolesModel } from "../models/roles.model";
 import { Request, Response } from "express";
 
-export class MaterielsController {
-  private model: MaterielsModel;
+export class RolesController {
+  private model: RolesModel;
 
-  constructor(model: MaterielsModel) {
+  constructor(model: RolesModel) {
     this.model = model;
   }
 
-  async getAllMateriels(req: Request, res: Response) {
+  async getAllRoles(req: Request, res: Response) {
     let response = await this.model.getAll();
     if (!response.success) {
       return res.status(500).json(response);
@@ -16,7 +16,7 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async getOneMateriel(req: Request, res: Response) {
+  async getOneRole(req: Request, res: Response) {
     const id: number = parseInt(req.params.id);
     const response = await this.model.getOne(id);
     if (!response.success) {
@@ -25,7 +25,7 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async createMateriel(req: Request, res: Response) {
+  async createRole(req: Request, res: Response) {
     const nom: string = req.body.nom;
     const response = await this.model.create(nom);
     if (!response.success) {
@@ -37,7 +37,7 @@ export class MaterielsController {
     return res.status(201).json(response);
   }
 
-  async updateMateriel(req: Request, res: Response) {
+  async updateRole(req: Request, res: Response) {
     const nom: string = req.body.nom;
     const id: number = req.body.id;
 
@@ -51,7 +51,7 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async deleteMateriel(req: Request, res: Response) {
+  async deleteRole(req: Request, res: Response) {
     const id: number = parseInt(req.params.id);
 
     const response = await this.model.delete(id);

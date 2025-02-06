@@ -1,14 +1,14 @@
-import { MaterielsModel } from "../models/materiels.model";
+import { ReversationsModel } from "../models/reservations.model";
 import { Request, Response } from "express";
 
-export class MaterielsController {
-  private model: MaterielsModel;
+export class ReservationsController {
+  private model: ReversationsModel;
 
-  constructor(model: MaterielsModel) {
+  constructor(model: ReversationsModel) {
     this.model = model;
   }
 
-  async getAllMateriels(req: Request, res: Response) {
+  async getAllReversation(req: Request, res: Response) {
     let response = await this.model.getAll();
     if (!response.success) {
       return res.status(500).json(response);
@@ -16,8 +16,9 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async getOneMateriel(req: Request, res: Response) {
+  async getOneReversation(req: Request, res: Response) {
     const id: number = parseInt(req.params.id);
+
     const response = await this.model.getOne(id);
     if (!response.success) {
       return res.status(500).json(response);
@@ -25,9 +26,18 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async createMateriel(req: Request, res: Response) {
-    const nom: string = req.body.nom;
-    const response = await this.model.create(nom);
+  async createReversation(req: Request, res: Response) {
+    const salle_id: number = parseInt(req.body.salle_id);
+    const utilisateur_id: number = parseInt(req.body.utilisateur_id);
+    const date_debut: Date = req.body.date_debut;
+    const date_fin: Date = req.body.date_fin;
+
+    const response = await this.model.create(
+      salle_id,
+      utilisateur_id,
+      date_debut,
+      date_fin
+    );
     if (!response.success) {
       return res.status(500).json(response);
     }
@@ -37,11 +47,12 @@ export class MaterielsController {
     return res.status(201).json(response);
   }
 
-  async updateMateriel(req: Request, res: Response) {
-    const nom: string = req.body.nom;
-    const id: number = req.body.id;
+  async updateReversation(req: Request, res: Response) {
+    const date_debut: Date = req.body.date_debut;
+    const date_fin: Date = req.body.date_fin;
+    const id: number = parseInt(req.body.id);
 
-    const response = await this.model.update(nom, id);
+    const response = await this.model.update(date_debut, date_fin, id);
     if (!response.success) {
       return res.status(500).json(response);
     }
@@ -51,7 +62,7 @@ export class MaterielsController {
     return res.status(200).json(response);
   }
 
-  async deleteMateriel(req: Request, res: Response) {
+  async deleteReversation(req: Request, res: Response) {
     const id: number = parseInt(req.params.id);
 
     const response = await this.model.delete(id);

@@ -1,0 +1,1 @@
+ALTER TABLE Salles_Materiels DROP FOREIGN KEY Salles_id_fk;
