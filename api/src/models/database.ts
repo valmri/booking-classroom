@@ -22,12 +22,25 @@ export class DataBase {
     let connection;
     try {
       connection = await this.pool.getConnection();
-      return await connection.query(query, params);
+      const rows = await connection.query(query, params);
+      return { success: true, data: rows };
     } catch (error) {
-      console.error("Erreur lors de l'execution de la requete :", error);
-      throw error;
+      console.error("Erreur SQL :", error);
+      return {
+        success: false,
+        error: "Erreur lors de l'exécution de la requête.",
+      };
     } finally {
-      if (connection) connection.release();
+      if (connection) {
+        try {
+          connection.release();
+        } catch (releaseError) {
+          console.error(
+            "Erreur lors de la libération de la connexion :",
+            releaseError
+          );
+        }
+      }
     }
   }
 }

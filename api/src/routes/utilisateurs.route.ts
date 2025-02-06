@@ -12,5 +12,9 @@ export const UtilisateursRoute = (controller: UtilisateursController) => {
     controller.getOneUtilisateur(req,res);
   })
 
+  router.post("/",(req,res) => {
+    controller.createUtilisateur(req,res);
+  })
+
   return router;
 };
