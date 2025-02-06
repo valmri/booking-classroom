@@ -16,4 +16,24 @@ export class MaterielsModel {
       id,
     ]);
   }
+
+  async create(nom: string) {
+    return this.database.executeQuery(
+      "INSERT INTO Materiels (nom) VALUES (?)",
+      [nom]
+    );
+  }
+
+  async update(nom: string, id: number) {
+    return this.database.executeQuery(
+      "UPDATE Materiels SET nom = ?, date_modification = NOW() WHERE id = ?",
+      [nom, id]
+    );
+  }
+
+  async delete(id: number) {
+    return this.database.executeQuery("DELETE FROM Materiels WHERE id = ?", [
+      id,
+    ]);
+  }
 }
