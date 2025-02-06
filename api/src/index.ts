@@ -8,6 +8,9 @@ import { UtilisateursRoute } from "./routes/utilisateurs.route";
 import { MaterielsModel } from "./models/materiels.model";
 import { MaterielsRoute } from "./routes/materiels.route";
 import { MaterielsController } from "./controllers/materiels.controller";
+import { ReversationsModel } from "./models/reservations.model";
+import { ReservationsController } from "./controllers/reservations.controller";
+import { ReservationsRoute } from "./routes/reservations.routes";
 
 const app = express();
 app.use(cors());
@@ -26,6 +29,11 @@ app.use("/utilisateurs", UtilisateursRoute(utilisateursController));
 const materielsModel = new MaterielsModel(database);
 const materielsController = new MaterielsController(materielsModel);
 app.use("/materiels", MaterielsRoute(materielsController));
+
+const reservationsModel: ReversationsModel = new ReversationsModel(database);
+const reservationsController: ReservationsController =
+  new ReservationsController(reservationsModel);
+app.use("/reservations", ReservationsRoute(reservationsController));
 
 app.listen(Config.PORT_API, () => {
   console.log(`Server is running on ${Config.BASE_URL}`);
