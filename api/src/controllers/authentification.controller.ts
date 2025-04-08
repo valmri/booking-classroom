@@ -61,7 +61,6 @@ export class AuthentificationController {
           role: response.data[0].role_id,
           token: jwtToken,
         };
-        console.log("USER", user);
         return res.status(200).json({ success: true, data: user });
       } else {
         return res

@@ -38,7 +38,7 @@ app.use("/utilisateurs", UtilisateursRoute(utilisateursController));
 
 const materielsModel: MaterielsModel = new MaterielsModel(database);
 const materielsController: MaterielsController = new MaterielsController(materielsModel);
-app.use("/materiels",Auth, MaterielsRoute(materielsController));
+app.use("/materiels", MaterielsRoute(materielsController));
 
 const reservationsModel: ReversationsModel = new ReversationsModel(database);
 const reservationsController: ReservationsController = new ReservationsController(reservationsModel);
@@ -46,11 +46,11 @@ app.use("/reservations", ReservationsRoute(reservationsController));
 
 const rolesModel: RolesModel = new RolesModel(database);
 const rolesController: RolesController = new RolesController(rolesModel);
-app.use("/roles",Auth, RolesRoute(rolesController));
+app.use("/roles", RolesRoute(rolesController));
 
 const sallesModel: SallesModel = new SallesModel(database);
 const sallesController: SallesController = new SallesController(sallesModel);
-app.use("/salles",Auth, SallesRoute(sallesController));
+app.use("/salles", SallesRoute(sallesController));
 
 // Authentification
 const authentificationController: AuthentificationController =
