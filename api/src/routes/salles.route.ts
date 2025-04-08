@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { SallesController } from "../controllers/salles.controller";
 import { Request, Response } from "express";
+import { verifyRole } from "../services/verifyRole";
 
 export const SallesRoute = (controller: SallesController) => {
   const router = Router();
@@ -9,19 +10,19 @@ export const SallesRoute = (controller: SallesController) => {
     controller.getAllSalles(req, res);
   });
 
-  router.get("/:id",(req:  Request,res: Response) => {
+  router.get("/:id", (req:  Request,res: Response) => {
     controller.getOneSalle(req,res);
   })
 
-  router.post("/",(req: Request,res: Response) => {
+  router.post("/", verifyRole, (req: Request,res: Response) => {
     controller.createSalle(req,res);
   })
 
-  router.put("/:id",(req: Request,res: Response) => {
+  router.put("/:id", verifyRole, (req: Request,res: Response) => {
     controller.updateSalle(req,res);
   })
 
-  router.delete("/:id",(req: Request,res: Response) => {
+  router.delete("/:id", verifyRole, (req: Request,res: Response) => {
     controller.deleteSalle(req,res);
   })
 

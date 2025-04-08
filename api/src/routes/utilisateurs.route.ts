@@ -13,15 +13,15 @@ export const UtilisateursRoute = (controller: UtilisateursController) => {
     controller.getOneUtilisateur(req,res);
   })
 
-  router.post("/",(req: Request,res: Response) => {
+  router.post("/", (req: Request,res: Response) => {
     controller.createUtilisateur(req,res);
   })
 
-  router.delete("/:id",(req: Request,res: Response) => {
+  router.delete("/:id", (req: Request,res: Response) => {
     controller.deleteUtilisateur(req,res);
   })
 
-  router.put("/:id",(req: Request,res: Response) => {
+  router.put("/:id", (req: Request,res: Response) => {
     controller.updateUtilisateur(req,res);
   })
 

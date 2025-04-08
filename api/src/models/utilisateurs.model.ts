@@ -1,6 +1,5 @@
 import { DataBase } from "./database";
 import bcrypt from "bcrypt";
-
 export class UtilisateursModel {
   private database: DataBase;
 

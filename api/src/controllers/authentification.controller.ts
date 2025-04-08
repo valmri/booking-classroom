@@ -63,6 +63,7 @@ export class AuthentificationController {
         mot_de_passe,
         response.data[0].mot_de_passe
       );
+      
       if (isMatch) {
         const { nom, prenom, email, role_id } = response.data[0];
 
