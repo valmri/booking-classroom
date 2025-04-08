@@ -18,6 +18,7 @@ import { SallesModel } from "./models/salles.model";
 import { SallesController } from "./controllers/salles.controller";
 import { SallesRoute } from "./routes/salles.route";
 
+
 const app = express();
 app.use(cors());
 app.use(
@@ -33,8 +34,8 @@ const utilisateursModel: UtilisateursModel = new UtilisateursModel(database);
 const utilisateursController: UtilisateursController = new UtilisateursController(utilisateursModel);
 app.use("/utilisateurs", UtilisateursRoute(utilisateursController));
 
-const materielsModel = new MaterielsModel(database);
-const materielsController = new MaterielsController(materielsModel);
+const materielsModel: MaterielsModel = new MaterielsModel(database);
+const materielsController: MaterielsController = new MaterielsController(materielsModel);
 app.use("/materiels", MaterielsRoute(materielsController));
 
 const reservationsModel: ReversationsModel = new ReversationsModel(database);
