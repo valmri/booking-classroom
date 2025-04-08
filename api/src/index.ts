@@ -19,7 +19,8 @@ import { SallesController } from "./controllers/salles.controller";
 import { SallesRoute } from "./routes/salles.route";
 import { AuthentificationController } from "./controllers/authentification.controller";
 import { AuthentificationRoute } from "./routes/authentification.route";
-
+import {auth} from "./services/auth";
+import { verifyRole } from "./services/verifyRole";
 const app = express();
 app.use(cors());
 app.use(
@@ -34,23 +35,23 @@ const database = new DataBase();
 const utilisateursModel: UtilisateursModel = new UtilisateursModel(database);
 const utilisateursController: UtilisateursController =
   new UtilisateursController(utilisateursModel);
-app.use("/utilisateurs", UtilisateursRoute(utilisateursController));
+app.use("/utilisateurs", auth, UtilisateursRoute(utilisateursController));
 
 const materielsModel: MaterielsModel = new MaterielsModel(database);
 const materielsController: MaterielsController = new MaterielsController(materielsModel);
-app.use("/materiels", MaterielsRoute(materielsController));
+app.use("/materiels", auth, MaterielsRoute(materielsController));
 
 const reservationsModel: ReversationsModel = new ReversationsModel(database);
 const reservationsController: ReservationsController = new ReservationsController(reservationsModel);
-app.use("/reservations", ReservationsRoute(reservationsController));
+app.use("/reservations", auth, ReservationsRoute(reservationsController));
 
 const rolesModel: RolesModel = new RolesModel(database);
 const rolesController: RolesController = new RolesController(rolesModel);
-app.use("/roles", RolesRoute(rolesController));
+app.use("/roles", auth, verifyRole, RolesRoute(rolesController));
 
 const sallesModel: SallesModel = new SallesModel(database);
 const sallesController: SallesController = new SallesController(sallesModel);
-app.use("/salles", SallesRoute(sallesController));
+app.use("/salles", auth, SallesRoute(sallesController));
 
 // Authentification
 const authentificationController: AuthentificationController =

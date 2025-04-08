@@ -1,5 +1,5 @@
 import { DataBase } from "./database";
-import { crypt } from "../services/bcrypt";
+import bcrypt from "bcrypt";
 export class UtilisateursModel {
   private database: DataBase;
 

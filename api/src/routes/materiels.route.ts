@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { MaterielsController } from "../controllers/materiels.controller";
 import { Request, Response } from "express";
+import { verifyRole } from "../services/verifyRole";
 
 export const MaterielsRoute = (controller: MaterielsController) => {
   const router = Router();
@@ -13,15 +14,15 @@ export const MaterielsRoute = (controller: MaterielsController) => {
     controller.getOneMateriel(req, res);
   });
 
-  router.post("/", (req: Request, res: Response) => {
+  router.post("/", verifyRole, (req: Request, res: Response) => {
     controller.createMateriel(req, res);
   });
 
-  router.put("/", (req: Request, res: Response) => {
+  router.put("/", verifyRole, (req: Request, res: Response) => {
     controller.updateMateriel(req, res);
   });
 
-  router.delete("/:id", (req: Request, res: Response) => {
+  router.delete("/:id", verifyRole, (req: Request, res: Response) => {
     controller.deleteMateriel(req, res);
   });
   return router;
