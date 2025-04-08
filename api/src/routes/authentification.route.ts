@@ -11,10 +11,8 @@ export const AuthentificationRoute = (
     controller.signup(req, res);
   });
 
-  router.post("/login", (req: Request, res: Response) => {});
-
-  router.get("/", (req: Request, res: Response) => {
-    controller.genJwtToken(req, res);
+  router.post("/login", (req: Request, res: Response) => {
+    controller.login(req, res);
   });
   return router;
 };

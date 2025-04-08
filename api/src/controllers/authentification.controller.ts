@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import { UtilisateursModel } from "../models/utilisateurs.model";
 import jwt from "jsonwebtoken";
 import Config from "../config";
+import bcrypt from "bcrypt";
 
 export class AuthentificationController {
   private utilisateurModel: UtilisateursModel;
@@ -24,7 +25,7 @@ export class AuthentificationController {
         prenom,
         email,
         mot_de_passe,
-        0
+        1
       );
 
       if (!response.success) {
@@ -40,24 +41,41 @@ export class AuthentificationController {
         .status(204)
         .json({ success: false, data: "Formulaire incomplet." });
     }
-
-    // Create Utilisateur
-    // If exist -> renvoie erreur comme quoi utilisateur existe
   }
 
   async login(req: Request, res: Response) {
     const email: string = req.body.email;
     const mot_de_passe: string = req.body.mot_de_passe;
 
-    // get Utilisateur by username et password
-    // SI OK -> création jwtToken
-    // SINON renvoyer chier
+    const response = await this.utilisateurModel.getOneByEmail(email);
+
+    if (response.success) {
+      const isMatch: boolean = await bcrypt.compare(
+        mot_de_passe,
+        response.data[0].mot_de_passe
+      );
+      if (isMatch) {
+        const jwtToken: string = await this.genJwtToken(email);
+        const user: { email: string; role: number; token: string } = {
+          email: response.data[0].email,
+          role: response.data[0].role_id,
+          token: jwtToken,
+        };
+        console.log("USER", user);
+        return res.status(200).json({ success: true, data: user });
+      } else {
+        return res
+          .status(403)
+          .json({ success: false, data: "Échec de l'authentification" });
+      }
+    }
   }
 
-  async genJwtToken(req: Request, res: Response) {
-    const token = jwt.sign("abracadabra@gmail.fr", this.jwtSecret, {
+  async genJwtToken(email: string) {
+    const token = jwt.sign({ email: email }, this.jwtSecret, {
       expiresIn: "1h",
     });
-    return res.status(200).json({ token });
+
+    return token;
   }
 }
