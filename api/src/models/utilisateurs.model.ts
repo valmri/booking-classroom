@@ -30,7 +30,7 @@ export class UtilisateursModel {
     const salt = await bcrypt.genSalt(saltRounds);
     const hashedPassword = await bcrypt.hash(mot_de_passe, salt);
     return this.database.executeQuery(
-      "INSERT INTO Utilisateurs (nom,prenom,email,mot_de_passe,role_id) VALUES (?,?,?,?,?)",
+      "INSERT INTO Utilisateurs (nom,prenom,email,mot_de_passe,role_id) VALUES (?,?,?,?,?) RETURNING nom, prenom, email, role_id",
       [nom, prenom, email, hashedPassword, role_id]
     );
   }
