@@ -33,8 +33,17 @@ export class AuthentificationController {
           .status(500)
           .json({ success: false, data: "Compte existant." });
       } else {
-        const jwtToken: Promise<any> = this.genJwtToken(email);
-        return res.status(200).json({ succress: true, date: jwtToken });
+        const { nom, prenom, email, role_id } = response.data[0];
+
+        const user = {
+          nom,
+          prenom,
+          email,
+          role_id,
+        };
+
+        const jwtToken: string = await this.genJwtToken(user);
+        return res.status(200).json({ succress: true, data: jwtToken });
       }
     } else {
       return res
@@ -55,13 +64,18 @@ export class AuthentificationController {
         response.data[0].mot_de_passe
       );
       if (isMatch) {
-        const jwtToken: string = await this.genJwtToken(email);
-        const user: { email: string; role: number; token: string } = {
-          email: response.data[0].email,
-          role: response.data[0].role_id,
-          token: jwtToken,
+        const { nom, prenom, email, role_id } = response.data[0];
+
+        const user = {
+          nom,
+          prenom,
+          email,
+          role_id,
         };
-        return res.status(200).json({ success: true, data: user });
+
+        const jwtToken: string = await this.genJwtToken(user);
+
+        return res.status(200).json({ success: true, data: jwtToken });
       } else {
         return res
           .status(403)
@@ -70,10 +84,24 @@ export class AuthentificationController {
     }
   }
 
-  async genJwtToken(email: string) {
-    const token = jwt.sign({ email: email }, this.jwtSecret, {
-      expiresIn: "1h",
-    });
+  async genJwtToken(user: {
+    nom: string;
+    prenom: string;
+    email: string;
+    role_id: string;
+  }) {
+    const token = jwt.sign(
+      {
+        nom: user.nom,
+        prenom: user.prenom,
+        email: user.email,
+        role: user.role_id,
+      },
+      this.jwtSecret,
+      {
+        expiresIn: "1h",
+      }
+    );
 
     return token;
   }
