@@ -1,23 +1,18 @@
-const express = require('express');
-const router = express.Router();
-const jwt = require("jsonwebtoken");
-import { crypt } from "../services/bcrypt";
+import { Router } from "express";
+import { AuthentificationController } from "../controllers/authentification.controller";
+import { Request, Response } from "express";
 
-router.post("/login", (req: any, res: any) => {
-	// Récupération des paramètres POST (username et password)
-	const { email, password } = req.body;
+export const AuthentificationRoute = (
+  controller: AuthentificationController
+) => {
+  const router = Router();
 
-    const emailTest = "aa";
-    const cryptPassword = crypt(password)
-	if (password === "toto") {
-		// Encodage du JWT via la variable d'environnement JWT_SECRET
-		const jwtToken = jwt.sign({ email }, process.env.JWT_SECRET, {
-			expiresIn: "1h",
-		});
-		res.json(jwtToken);
-	} else {
-		res.status(401).json({ message: "Authentification échouée." });
-	}
-});
+  router.post("/signup", (req: Request, res: Response) => {
+    controller.signup(req, res);
+  });
 
-module.exports = router;
+  router.post("/login", (req: Request, res: Response) => {
+    controller.login(req, res);
+  });
+  return router;
+};
